@@ -1,0 +1,109 @@
+<DataPipeModel description="Description of New Model 0" name="ADF" editBy="flow" is_init="false" useStreaming="auto" durableStreaming="false" streamingAutoStart="true" useHive="auto" batchDuration="P1M" runAsService="false" checkpoint="" batchSampling="true" sparkMasterHost="">
+  <HiveConfig>
+    <Properties>
+      <Property name="hive.warehouse.hdfs.source" value=""/>
+      <Property name="hive.metastore.data.source" value=""/>
+      <Property name="hive.server2.thrift.port" value=""/>
+      <Property name="hive.db.schema" value=""/>
+    </Properties>
+  </HiveConfig>
+  <ModelInfo validated="true">
+    <Pipes>
+      <Pipe index="1000" uuid="" name="(main)">
+      </Pipe>
+    </Pipes>
+    <Flows>
+      <Flow index="1000" uuid="Main" isNested="false" revision="10" name="Main" showFooter="true">
+        <Node index="1001" uuid="03aad0b7-51f0-4d49-876c-baca2b1a6e9b" type="StreamSource" label="Step 1" x="159" y="74" width="130" height="75">
+            <Output name="Out1" uid="0" outputType="DStream" dataType="String">
+              <Field name="data" label="data" type="string" isArray="false" isOptional="false"/>
+                <ExploreConfig>{&quot;_index&quot;:&quot;Default&quot;,&quot;items&quot;:[{&quot;name&quot;:&quot;Default&quot;}]}</ExploreConfig>
+            </Output>
+            <Model type="textFileStream" url="hdfs://10.111.3.133:8020/daisy/input/Types_jzuo.json" nameFilter="" include="true" initialOffset="earliest" maxFileSizeInUnit="-1" maxFileSizeUnit="mb" maxFileSize="-1" speficiedStartPosition="false" isOutputFileName="false" isSkipFirstLine="false" dataSpeed="" dataVolume="">
+              <Sample><![CDATA[{"stringT":"pid1a","booleanT":true,"DateTimeT":"2017-04-10 00:00:10","DateT":"2017-04-10","TimeT":"00:00:10","DoubleT":1.121233,"FloatT":1.01,"IntegerT":12,"LongT":20000,"NumberT":123123.3434}
+{"stringT":"pid2a","booleanT":false,"DateTimeT":"2017-05-10 00:00:10","DateT":"2017-04-10","TimeT":"00:00:10","DoubleT":1.121233,"FloatT":1.01,"IntegerT":12,"LongT":20000,"NumberT":123123.3434}]]></Sample>
+            </Model>
+        </Node>
+        <Node index="1002" uuid="5627e4af-bfe2-4ae7-8333-a3754da02b42" type="Parse" label="Step 2" x="355" y="81" width="130" height="75">
+            <Source name="source" uid="0" outputType="DStream" dataType="String">
+              <DataSource category="#OUTPUT" id="undefined" name="Out1" nodeId="03aad0b7-51f0-4d49-876c-baca2b1a6e9b">
+                <Field name="data" label="data" type="string" isDimension="false" isMeasure="false" isArray="false" isOptional="false"/>
+              </DataSource>
+            </Source>
+            <Output name="Out1" uid="0" outputType="DStream" dataType="class:Step2_Class">
+              <Field name="stringT" label="stringT" type="string" clazz="" isArray="false" isOptional="false"/>
+              <Field name="booleanT" label="booleanT" type="boolean" clazz="" isArray="false" isOptional="false"/>
+              <Field name="DateTimeT" label="DateTimeT" type="datetime" clazz="" isArray="false" isOptional="false"/>
+              <Field name="DateT" label="DateT" type="date" clazz="" isArray="false" isOptional="false"/>
+              <Field name="TimeT" label="TimeT" type="time" clazz="" isArray="false" isOptional="false"/>
+              <Field name="DoubleT" label="DoubleT" type="double" clazz="" isArray="false" isOptional="false"/>
+              <Field name="FloatT" label="FloatT" type="float" clazz="" isArray="false" isOptional="false"/>
+              <Field name="IntegerT" label="IntegerT" type="integer" clazz="" isArray="false" isOptional="false"/>
+              <Field name="LongT" label="LongT" type="long" clazz="" isArray="false" isOptional="false"/>
+              <Field name="NumberT" label="NumberT" type="number" clazz="" isArray="false" isOptional="false"/>
+                <ExploreConfig>{&quot;_index&quot;:&quot;Default&quot;,&quot;items&quot;:[{&quot;name&quot;:&quot;Default&quot;}]}</ExploreConfig>
+            </Output>
+            <Output name="Dropped" uid="1" outputType="DStream" dataType="(String,String)">
+              <Field name="___error___" label="error" type="string" isArray="false" isOptional="false"/>
+              <Field name="data" label="data" type="string" isArray="false" isOptional="false"/>
+                <ExploreConfig>{&quot;_index&quot;:&quot;Default&quot;,&quot;items&quot;:[{&quot;name&quot;:&quot;Default&quot;}]}</ExploreConfig>
+            </Output>
+            <Model format="json" caseClass="Step2_Class" isClassRef="false" fromHeader="true" addable="true" dropEvent="true" header="" timezone="Asia/Shanghai" daylight="false">
+              <Schema>
+                <Field name="stringT" initName="stringT" label="stringT" type="string" isDimension="false" isMeasure="false" clazz="" isArray="false" isOptional="false" excluded="false"/>
+                <Field name="booleanT" initName="booleanT" label="booleanT" type="boolean" isDimension="false" isMeasure="false" clazz="" isArray="false" isOptional="false" excluded="false"/>
+                <Field name="DateTimeT" initName="DateTimeT" label="DateTimeT" type="datetime" isDimension="false" isMeasure="false" clazz="" isArray="false" isOptional="false" excluded="false"/>
+                <Field name="DateT" initName="DateT" label="DateT" type="date" isDimension="false" isMeasure="false" clazz="" isArray="false" isOptional="false" excluded="false"/>
+                <Field name="TimeT" initName="TimeT" label="TimeT" type="time" isDimension="false" isMeasure="false" clazz="" isArray="false" isOptional="false" excluded="false"/>
+                <Field name="DoubleT" initName="DoubleT" label="DoubleT" type="double" isDimension="false" isMeasure="false" clazz="" isArray="false" isOptional="false" excluded="false"/>
+                <Field name="FloatT" initName="FloatT" label="FloatT" type="float" isDimension="false" isMeasure="false" clazz="" isArray="false" isOptional="false" excluded="false"/>
+                <Field name="IntegerT" initName="IntegerT" label="IntegerT" type="integer" isDimension="false" isMeasure="false" clazz="" isArray="false" isOptional="false" excluded="false"/>
+                <Field name="LongT" initName="LongT" label="LongT" type="long" isDimension="false" isMeasure="false" clazz="" isArray="false" isOptional="false" excluded="false"/>
+                <Field name="NumberT" initName="NumberT" label="NumberT" type="number" isDimension="false" isMeasure="false" clazz="" isArray="false" isOptional="false" excluded="false"/>
+              </Schema>
+            </Model>
+        </Node>
+        <Node index="1003" uuid="9b1aea2e-83df-4647-81ab-75526db19abf" type="StreamTarget" label="Step 3" x="580" y="74" width="130" height="75">
+            <Source name="source" uid="0" outputType="DStream" dataType="class:Step2_Class">
+              <DataSource category="#OUTPUT" id="undefined" name="Out1" nodeId="5627e4af-bfe2-4ae7-8333-a3754da02b42">
+                <Field name="stringT" label="stringT" type="string" isDimension="false" isMeasure="false" clazz="" isArray="false" isOptional="false"/>
+                <Field name="booleanT" label="booleanT" type="boolean" isDimension="false" isMeasure="false" clazz="" isArray="false" isOptional="false"/>
+                <Field name="DateTimeT" label="DateTimeT" type="datetime" isDimension="false" isMeasure="false" clazz="" isArray="false" isOptional="false"/>
+                <Field name="DateT" label="DateT" type="date" isDimension="false" isMeasure="false" clazz="" isArray="false" isOptional="false"/>
+                <Field name="TimeT" label="TimeT" type="time" isDimension="false" isMeasure="false" clazz="" isArray="false" isOptional="false"/>
+                <Field name="DoubleT" label="DoubleT" type="double" isDimension="false" isMeasure="false" clazz="" isArray="false" isOptional="false"/>
+                <Field name="FloatT" label="FloatT" type="float" isDimension="false" isMeasure="false" clazz="" isArray="false" isOptional="false"/>
+                <Field name="IntegerT" label="IntegerT" type="integer" isDimension="false" isMeasure="false" clazz="" isArray="false" isOptional="false"/>
+                <Field name="LongT" label="LongT" type="long" isDimension="false" isMeasure="false" clazz="" isArray="false" isOptional="false"/>
+                <Field name="NumberT" label="NumberT" type="number" isDimension="false" isMeasure="false" clazz="" isArray="false" isOptional="false"/>
+              </DataSource>
+            </Source>
+            <Output name="out" uid="0" outputType="DStream" dataType="class:Step2_Class">
+              <Field name="stringT" label="stringT" type="string" clazz="" isArray="false" isOptional="false"/>
+              <Field name="booleanT" label="booleanT" type="boolean" clazz="" isArray="false" isOptional="false"/>
+              <Field name="DateTimeT" label="DateTimeT" type="datetime" clazz="" isArray="false" isOptional="false"/>
+              <Field name="DateT" label="DateT" type="date" clazz="" isArray="false" isOptional="false"/>
+              <Field name="TimeT" label="TimeT" type="time" clazz="" isArray="false" isOptional="false"/>
+              <Field name="DoubleT" label="DoubleT" type="double" clazz="" isArray="false" isOptional="false"/>
+              <Field name="FloatT" label="FloatT" type="float" clazz="" isArray="false" isOptional="false"/>
+              <Field name="IntegerT" label="IntegerT" type="integer" clazz="" isArray="false" isOptional="false"/>
+              <Field name="LongT" label="LongT" type="long" clazz="" isArray="false" isOptional="false"/>
+              <Field name="NumberT" label="NumberT" type="number" clazz="" isArray="false" isOptional="false"/>
+                <ExploreConfig>{&quot;_index&quot;:&quot;Default&quot;,&quot;items&quot;:[{&quot;name&quot;:&quot;Default&quot;}]}</ExploreConfig>
+            </Output>
+            <Model type="file" url="hdfs://10.111.3.133:8020/daisy/output/ADF" namePrefix="" format="json" partitionNum="1" dataSpeed="" dataVolume="">
+            </Model>
+        </Node>
+        <Link srcId="03aad0b7-51f0-4d49-876c-baca2b1a6e9b" srcPort="dout:0" tgtId="5627e4af-bfe2-4ae7-8333-a3754da02b42" tgtPort="in:0"/>
+        <Link srcId="5627e4af-bfe2-4ae7-8333-a3754da02b42" srcPort="dout:0" tgtId="9b1aea2e-83df-4647-81ab-75526db19abf" tgtPort="in:0"/>
+      <Codes>
+      </Codes>
+      <Libraries>
+      </Libraries>
+      <Resources>
+      </Resources>
+      <Properties>[]</Properties>
+      </Flow>
+    </Flows>
+  </ModelInfo>
+</DataPipeModel>
